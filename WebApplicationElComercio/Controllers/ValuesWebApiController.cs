@@ -26,8 +26,8 @@ namespace WebApplicationElComercio.Controllers
 
 
         [HttpGet]
-        [Route("ListOrdenPagoBySucursal/{sucursalId}/{moneda?}")]
-        public IEnumerable<OrdenPago> ListOrdenPagoBySucursal(int sucursalId, string moneda = null)
+        [Route("ListOrdenPagoBySucursal/{sucursalId}/{moneda}")]
+        public IEnumerable<OrdenPago> ListOrdenPagoBySucursal(int sucursalId, string moneda)
         {
             return _ordenPagoBusiness.GetAllBySucursalAndMoney(sucursalId, moneda);
         }

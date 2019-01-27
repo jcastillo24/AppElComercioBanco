@@ -47,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.fecharegistro)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.idbanco)
+                @Html.DisplayFor(modelItem => item.banco.nombre)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.idsucursal }) |
