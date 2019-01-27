@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebApplicationElComercio.Models.OrdenPago>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idordenpago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.moneda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechapago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idsucursal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idordenpago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.moneda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechapago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idsucursal)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.idordenpago }) |
+                @Html.ActionLink("Details", "Details", new { id = item.idordenpago }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.idordenpago })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

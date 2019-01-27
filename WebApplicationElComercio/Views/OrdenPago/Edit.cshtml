@@ -1,0 +1,69 @@
+﻿@model WebApplicationElComercio.Models.OrdenPago
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<h4>OrdenPago</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="idordenpago" class="control-label"></label>
+                <input asp-for="idordenpago" class="form-control" />
+                <span asp-validation-for="idordenpago" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="monto" class="control-label"></label>
+                <input asp-for="monto" class="form-control" />
+                <span asp-validation-for="monto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="moneda" class="control-label"></label>
+                @Html.DropDownListFor(model => model.moneda, new List<SelectListItem>
+                {
+                            new SelectListItem() {Text = "Soles", Value="Soles"},
+                            new SelectListItem() {Text = "Dólares", Value="Dólares"}
+                })
+                <span asp-validation-for="moneda" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="estado" class="control-label"></label>
+                @Html.DropDownListFor(model => model.estado, new List<SelectListItem>
+                {
+                            new SelectListItem() {Text = "Pagada", Value="Pagada"},
+                            new SelectListItem() {Text = "Declinada", Value="Declinada"},
+                            new SelectListItem() {Text = "Fallida", Value="Fallida"},
+                            new SelectListItem() {Text = "Anulada", Value="Anulada"}
+                })
+                <span asp-validation-for="estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fechapago" class="control-label"></label>
+                <input asp-for="fechapago" class="form-control" />
+                <span asp-validation-for="fechapago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idsucursal" class="control-label"></label>
+                @Html.DropDownListFor(model => model.idsucursal, new List<SelectListItem>(ViewBag.ListSurcusales), "---- Seleccione Sucursal ----")
+                <span asp-validation-for="idsucursal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
