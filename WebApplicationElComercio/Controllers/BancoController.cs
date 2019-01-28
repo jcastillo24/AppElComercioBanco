@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLayer.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationElComercio.Models;
 
 namespace WebApplicationElComercio.Controllers
 {
+    //[Authorize(Roles = "Operador1,Administrador")]
     public class BancoController : Controller
     {
         private readonly IBancoBusiness _bancoBusiness;
