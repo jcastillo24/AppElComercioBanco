@@ -11,7 +11,7 @@ using WebApplicationElComercio.Models;
 
 namespace WebApplicationElComercio.Controllers
 {
-    //[Authorize(Roles = "Operador2,Administrador")]
+    [Authorize(Roles = "Operador2,Administrador")]
     public class OrdenPagoController : Controller
     {
         private readonly IOrdenPagoBusiness _ordenPagoBusiness;

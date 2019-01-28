@@ -28,7 +28,7 @@ namespace WebApplicationElComercio
         {
             Configuration = configuration;
         }
-
+ 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -46,8 +46,9 @@ namespace WebApplicationElComercio
                     Configuration.GetConnectionString("DefaultConnection")));
             //services.AddDefaultIdentity<IdentityUser>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
 
             services.AddScoped<IBancoBusiness, BancoBusiness>();
@@ -110,7 +111,7 @@ namespace WebApplicationElComercio
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -141,6 +142,55 @@ namespace WebApplicationElComercio
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateUserRoles(serviceProvider).Wait();
+
         }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { "Operador1", "Operador2", "Administrador" };
+            //Usuarios que se registraran para el sistema
+            string[] UserNames = { "jcastillo1", "jcastillo2", "jcastillo3" };
+            IdentityResult roleResult;
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+
+            foreach (var userName in UserNames)
+            {
+                var contador = 1;
+                var poweruser = new IdentityUser
+                {
+                    UserName = userName,
+                    Email = userName,
+                };
+                string userPWD = "123456";
+                var _user = await UserManager.FindByEmailAsync(userName);
+
+                if (_user == null)
+                {
+                    var createPowerUser = await UserManager.CreateAsync(poweruser, userPWD);
+                    if (createPowerUser.Succeeded)
+                    {
+                        await UserManager.AddToRoleAsync(poweruser, roleNames[contador]);
+
+                    }
+                }
+                contador++;
+
+            }
+            
+        }
+
+
     }
 }

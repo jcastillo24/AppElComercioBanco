@@ -10,7 +10,7 @@ using WebApplicationElComercio.Models;
 
 namespace WebApplicationElComercio.Controllers
 {
-    //[Authorize(Roles = "Operador1,Administrador")]
+    [Authorize(Roles = "Operador1,Administrador")]
     public class BancoController : Controller
     {
         private readonly IBancoBusiness _bancoBusiness;
